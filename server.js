@@ -9,8 +9,8 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI);
 
 const Book = mongoose.model("Book", {
-  title: String,
-  author: String
+  title: { type: String, required: true },
+  author: { type: String, required: true }
 });
 
 app.get("/", (req, res) => {
