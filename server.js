@@ -27,6 +27,16 @@ app.post("/books", async (req, res) => {
   res.json(book);
 });
 
+// 🔥 DELETE ROUTE ADDED HERE
+app.delete("/books/:id", async (req, res) => {
+  try {
+    await Book.findByIdAndDelete(req.params.id);
+    res.send("Deleted");
+  } catch (error) {
+    res.status(500).send("Error deleting book");
+  }
+});
+
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running");
 });
