@@ -23,8 +23,17 @@ app.get("/books", async (req, res) => {
 });
 
 app.post("/books", async (req, res) => {
-  const book = await Book.create(req.body);
-  res.json(book);
+  try {
+    if (Array.isArray(req.body)) {
+      const books = await Book.insertMany(req.body);
+      res.json(books);
+    } else {
+      const book = await Book.create(req.body);
+      res.json(book);
+    }
+  } catch (error) {
+    res.status(500).send("Error adding books");
+  }
 });
 
 // 🔥 DELETE ROUTE ADDED HERE
